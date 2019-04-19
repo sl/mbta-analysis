@@ -3,11 +3,11 @@ const configurations = {
     backendAPI: 'http://localhost:5000/api'
   },
   production: {
-    backendAPI: 'http://localhost:5000/api'
+    backendAPI: 'http://localhost/api'
   },
 };
 
-const env = process.env.node_env || 'development';
+const env = process.env.NODE_ENV || 'development';
 const config = configurations[env];
 
 export default config;
