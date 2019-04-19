@@ -10,12 +10,13 @@ const app = express();
 // add routers to the app
 app.use('/api/mbta', mbtaRoutes);
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 // set up express so it serves the frontend if we're not in /api
 app.use(express.static(path.join(__dirname, 'frontend/build')));
 
 // anything that doesn't match any patterns should be routed to index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + '/frontend/build/index.html'));
 });
 
 const main = async () => {

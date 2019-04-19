@@ -6,8 +6,8 @@ const App = () => {
   
   useEffect(() => {
     const fetchHello = async () => {
-      const result = await fetchJSON('/');
-      setHello(result);
+      const result = await fetchJSON('mbta');
+      setHello(result.hello);
     };
     
     fetchHello();
