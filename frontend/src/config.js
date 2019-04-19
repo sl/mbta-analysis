@@ -3,7 +3,7 @@ const configurations = {
     backendAPI: 'http://localhost:5000/api'
   },
   production: {
-    backendAPI: 'http://localhost/api'
+    backendAPI: 'https://mbta-analysis.herokuapp.com/api'
   },
 };
 
