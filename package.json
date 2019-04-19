@@ -4,7 +4,8 @@
   "description": "A web based data visualization tool for analyzing the performance of the MBTA.",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node --experimental-modules index.mjs"
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/sl/mbta-analysis/issues"
   },
-  "homepage": "https://github.com/sl/mbta-analysis#readme"
+  "homepage": "https://github.com/sl/mbta-analysis#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
+    "express": "^4.16.4"
+  }
 }
