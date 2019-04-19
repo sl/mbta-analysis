@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchJSON } from 'utils/communication'
+import { fetchJSON } from './utils/communication'
 
 const App = () => {
   const [hello, setHello] = useState('not ready yet');
@@ -9,6 +9,8 @@ const App = () => {
       const result = await fetchJSON('/');
       setHello(result);
     };
+    
+    fetchHello();
   }, []);
   
   return (
