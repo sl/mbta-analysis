@@ -2,11 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { getDateRangeStart } from '../models/mbta_performance.mjs';
-import { getDateRangeEnd } from '../models/mbta_performance.mjs';
+import { getDateRangeStart } from '../models/mbta_performance';
+import { getDateRangeEnd } from '../models/mbta_performance';
 
 // sub-router imports
-import performanceRoutes from './mbta/performance.mjs';
+import performanceRoutes from './mbta/performance';
 
 // set up the router
 const router = express.Router();

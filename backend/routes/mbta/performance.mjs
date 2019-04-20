@@ -2,8 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { getPerformanceForDate } from '../../models/mbta_performance.mjs';
-import { getPerformanceForRange } from '../../models/mbta_performance.mjs';
+import { getPerformanceForDate } from '../../models/mbta_performance';
+import { getPerformanceForRange } from '../../models/mbta_performance';
 
 // set up the router
 
