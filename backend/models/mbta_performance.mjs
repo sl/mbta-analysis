@@ -18,6 +18,24 @@ export const getDateRangeEnd = async () => {
   return toFormattedDateString(rows[0]['end_date']);
 };
 
+export const getPerformanceForDate = async (date) => {
+  const [rows, cols] = await db().execute(
+    
+    'SELECT plog_date, AVG(plog_numerator / plog_denominator) as performance ' +
+    'FROM performance_log ' +
+    'WHERE plog_date = ? ' +
+    'GROUP BY plog_date ' +
+    'LIMIT 1',
+    
+    [date]
+  );
+  
+  const result = {};
+  result[toFormattedDateString(rows[0].plog_date)] = rows[0].performance;
+  
+  return result;
+};
+
 export const getPerformanceForRange = async (start, end) => {
   if (Date.parse(start) > Date.parse(end)) {
     throw new Error('start of date range must be before the end of date range');
