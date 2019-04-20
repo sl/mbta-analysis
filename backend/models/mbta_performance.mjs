@@ -8,6 +8,11 @@ export const getDateRangeStart = async () => {
   const [rows, cols] =  await db().query(
     'SELECT MIN(plog_date) as start_date FROM performance_log'
   );
+  
+  if (rows.length === 0) {
+    throw new Error('no dates for analysis found');
+  }
+  
   return toFormattedDateString(rows[0]['start_date']);
 };
 
@@ -15,6 +20,11 @@ export const getDateRangeEnd = async () => {
   const [rows, cols] =  await db().query(
     'SELECT MAX(plog_date) as end_date FROM performance_log'
   );
+  
+  if (rows.length === 0) {
+    throw new Error('no dates for analysis found');
+  }
+  
   return toFormattedDateString(rows[0]['end_date']);
 };
 
@@ -31,7 +41,10 @@ export const getPerformanceForDate = async (date) => {
   );
   
   const result = {};
-  result[toFormattedDateString(rows[0].plog_date)] = rows[0].performance;
+  
+  if (rows.length !== 0) {
+    result[toFormattedDateString(rows[0].plog_date)] = rows[0].performance;
+  }
   
   return result;
 };
