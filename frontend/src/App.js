@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { fetchJSON } from './utils/communication'
 
 const App = () => {
-  const [hello, setHello] = useState('not ready yet');
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   
   useEffect(() => {
-    const fetchHello = async () => {
-      const result = await fetchJSON('mbta');
-      setHello(result.hello);
+    const fetchDateRange = async () => {
+      const dateRange = await fetchJSON('mbta/date-range');
+      setStartDate(dateRange.startDate);
+      setEndDate(dateRange.endDate)
     };
     
-    fetchHello();
+    fetchDateRange();
   }, []);
   
-  return (
-    <h1>Hello {hello}</h1>
+  return(
+    <p>
+      Start Date: {startDate}, End Date: {endDate}
+    </p>
   );
 }
 

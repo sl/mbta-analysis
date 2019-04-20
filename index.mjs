@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import { connectToDatabase } from './backend/utils/db';
 
 // routes
 import mbtaRoutes from './backend/routes/mbta_routes';
@@ -20,7 +21,10 @@ app.get('*', (req, res) => {
 });
 
 const main = async () => {
+  connectToDatabase();
+  
   const port = process.env.PORT || 5000;
+  
   app.listen(port, () => {
     console.log(`listening on port ${port}`);
   });
