@@ -4,10 +4,9 @@ import cors from 'cors';
 
 import { getDateRangeStart } from '../models/mbta_performance.mjs';
 import { getDateRangeEnd } from '../models/mbta_performance.mjs';
-import { getPerformanceForDate } from '../models/mbta_performance.mjs';
-import { getPerformanceForRange } from '../models/mbta_performance.mjs';
 
-import performanceRoute from './mbta/performance.mjs';
+// sub-router imports
+import performanceRoutes from './mbta/performance.mjs';
 
 // set up the router
 const router = express.Router();
@@ -25,12 +24,19 @@ router.get('/start-date', cors(), async (req, res) => {
   res.json({ startDate });
 });
 
-// gets the latest date available for analysis
+// gets the latest date available for analysis of mbta data
 router.get('/end-date', cors(), async (req, res) => {
   const endDate = await getDateRangeEnd();
   res.json({ endDate });
 });
 
-router.use('/performance', performanceRoute);
+// gets the range of dates available for analysis of mbta data
+router.get('/date-range', cors(), async (req, res) => {
+  const startDate = await getDateRangeStart();
+  const endDate = await getDateRangeEnd();
+  res.json({ startDate, endDate });
+});
+
+router.use('/performance', performanceRoutes);
 
 export default router;
