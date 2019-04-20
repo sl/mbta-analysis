@@ -13,8 +13,7 @@ export const connectToDatabase = () => {
   
   pool = mysql2.createPool(config).promise();
   
-  console.log('created pool with config:');
-  console.log(config);
+  console.log('created database connection pool');
 };
 
 // gets a handle on the shared database pool
