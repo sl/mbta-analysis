@@ -14,7 +14,7 @@ router.use(bodyParser.urlencoded({
   extended: true,
 }));
 
-// -- routes for /api/mbta/performance
+// routes for /api/mbta/performance
 
 // gets the performance rating for the givee date
 router.get('/:date', cors(), async (req, res) => {

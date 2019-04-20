@@ -17,7 +17,7 @@ router.use(bodyParser.urlencoded({
   extended: true,
 }));
 
-// -- routes --
+// routes for /api/mbta
 
 // gets the first date available for analysis
 router.get('/start-date', cors(), async (req, res) => {
