@@ -43,6 +43,7 @@ const ControlledVisualizer = (props) => {
   const { classes } = props;
   
   const [comparison, setComparison] = useState('wind-speed');
+  const [line, setLine] = useState('all');
   
   const [startDate, setStartDate] = useState('2018-01-01');
   const [endDate, setEndDate] = useState('2018-02-01');
@@ -62,6 +63,10 @@ const ControlledVisualizer = (props) => {
   
   const selectComparisonType = (event) => {
     setComparison(event.target.value);
+  };
+  
+  const selectLine = (event) => {
+    setLine(event.target.value)
   };
   
   const selectStartDate = (event) => {
@@ -99,6 +104,26 @@ const ControlledVisualizer = (props) => {
             <MenuItem value='min-temp'>Minimum Temperature</MenuItem>
           </Select>
         </FormControl>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="line-value">Compare</InputLabel>
+          <Select
+            value={line}
+            onChange={selectLine}
+            inputProps={{
+              name: 'line',
+              id: 'line-value'
+            }}
+          >
+            <MenuItem value='all'>All Lines</MenuItem>
+            <MenuItem value='Green-B'>Green Line (B)</MenuItem>
+            <MenuItem value='Green-C'>Green Line (C)</MenuItem>
+            <MenuItem value='Green-D'>Green Line (D)</MenuItem>
+            <MenuItem value='Green-E'>Green Line (E)</MenuItem>
+            <MenuItem value='Red'>Red Line</MenuItem>
+            <MenuItem value='Orange'>Orange Line</MenuItem>
+            <MenuItem value='Blue'>Blue Line</MenuItem>
+          </Select>
+        </FormControl>
         <TextField
           id="startdate"
           label="start date"
@@ -124,6 +149,7 @@ const ControlledVisualizer = (props) => {
       </form>
       <Visualizer
         comparison={comparison}
+        line={line}
         startDate={startDate}
         endDate={endDate}
         classes={classes}

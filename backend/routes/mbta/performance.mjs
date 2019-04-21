@@ -6,6 +6,8 @@ import { getPerformanceForDate } from '../../models/mbta_performance';
 import { getPerformanceForRange } from '../../models/mbta_performance';
 
 import { validate } from '../../utils/date';
+import { getPerformanceForDateOnLine } from '../../models/mbta_performance.mjs';
+import { getPerformanceForRangeOnLine } from '../../models/mbta_performance.mjs';
 
 // set up the router
 
@@ -18,9 +20,10 @@ router.use(bodyParser.urlencoded({
 
 // routes for /api/mbta/performance
 
-// gets the performance rating for the givee date
-router.get('/:date', cors(), async (req, res) => {
+// gets the performance rating for all lines for the givee date
+router.get('/:line/:date', cors(), async (req, res) => {
   const date = req.params.date;
+  const line = req.params.line;
   
   if (!validate(date)) {
     res.status(400);
@@ -28,14 +31,22 @@ router.get('/:date', cors(), async (req, res) => {
     return;
   }
   
-  const performance = await getPerformanceForDate(date);
-  res.json(performance);
+  console.log(`checking date for line: ${line}`);
+  
+  if (line === 'all') {
+    const performance = await getPerformanceForDate(date);
+    res.json(performance);
+  } else {
+    const performance = await getPerformanceForDateOnLine(line, date);
+    res.json(performance);
+  }
 });
 
 // gets the performance rating for the days within the given range
-router.get('/range/:start/:end', cors(), async (req, res) => {
+router.get('/:line/range/:start/:end', cors(), async (req, res) => {
   const start = req.params.start;
   const end = req.params.end;
+  const line = req.params.line;
   
   const startValid = validate(start);
   const endValid = validate(end);
@@ -52,8 +63,13 @@ router.get('/range/:start/:end', cors(), async (req, res) => {
   }
   
   try {
-    const performance = await getPerformanceForRange(start, end);
-    res.json(performance);
+    if (line === 'all') {
+      const performance = await getPerformanceForRange(start, end);
+      res.json(performance);
+    } else {
+      const performance = await getPerformanceForRangeOnLine(line, start, end);
+      res.json(performance);
+    }
   } catch (e) {
     res.status(400);
     res.send(`${e.name}: ${e.message}`);

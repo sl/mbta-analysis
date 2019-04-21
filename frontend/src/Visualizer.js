@@ -4,7 +4,7 @@ import { fetchJSON } from './utils/communication';
 import { toFormattedDateString } from './utils/date';
 
 const Visualizer = (props) => {
-  const { classes, startDate, endDate, comparison } = props;
+  const { classes, startDate, endDate, comparison, line } = props;
 
   const [performData, setPerformData] = useState([]);
   const [compareData, setCompareData] = useState([]);
@@ -12,12 +12,13 @@ const Visualizer = (props) => {
   
   useEffect(() => {
     const fetchData = async () => {
-      const performance = await fetchJSON(`mbta/performance/range/${startDate}/${endDate}`);
+      const performance = await fetchJSON(`mbta/performance/${line}/range/${startDate}/${endDate}`);
       const compare = await fetchJSON(`climate/${comparison}/range/${startDate}/${endDate}`);
 
-      console.log('attempting to transform the data...');
+      console.log(`fetching: mbta/performance/${line}/range/${startDate}/${endDate}`);
       // transform the performance data 
       
+      console.log(performance);
       let maximumComparison = Number.NEGATIVE_INFINITY;
       const compareData = Object.keys(compare).map((key) => {
         const date = Date.parse(key);
@@ -25,10 +26,11 @@ const Visualizer = (props) => {
         if (floatKey > maximumComparison) {
           maximumComparison = floatKey
         }
+        console.log(`key: ${key}, value: ${performance[key]}`);
         return {
           x: date,
           y: +floatKey.toFixed(2),
-          performance: +performance[key].toFixed(2),
+          performance: performance[key] === undefined ? 0 : +performance[key].toFixed(2),
           compare: +floatKey.toFixed(2)
         };
       });
@@ -37,7 +39,7 @@ const Visualizer = (props) => {
         const date = Date.parse(key)
         return {
           x: date,
-          y: maximumComparison * performance[key]
+          y: maximumComparison * (performance[key] === undefined ? 0 : performance[key])
         };
       })
 
@@ -49,7 +51,7 @@ const Visualizer = (props) => {
     if (Date.parse(startDate) < Date.parse(endDate)) {
       fetchData();
     }
-  }, [props.startDate, props.endDate, props.comparison]);
+  }, [props.startDate, props.endDate, props.comparison, props.line]);
   
   // don't display the chart if we have no data
   if (!initialized) return (null);
