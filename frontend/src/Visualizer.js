@@ -14,19 +14,21 @@ const Visualizer = (props) => {
     const fetchData = async () => {
       const performance = await fetchJSON(`mbta/performance/${line}/range/${startDate}/${endDate}`);
       const compare = await fetchJSON(`climate/${comparison}/range/${startDate}/${endDate}`);
-
-      console.log(`fetching: mbta/performance/${line}/range/${startDate}/${endDate}`);
+      
       // transform the performance data 
       
-      console.log(performance);
       let maximumComparison = Number.NEGATIVE_INFINITY;
-      const compareData = Object.keys(compare).map((key) => {
+      
+      const keys = Object.keys(compare).filter((key) => {
+        return (key in performance) && (key in compare);
+      });
+      
+      const compareData = keys.map((key) => {
         const date = Date.parse(key);
         const floatKey = parseFloat(compare[key]);
         if (floatKey > maximumComparison) {
           maximumComparison = floatKey
         }
-        console.log(`key: ${key}, value: ${performance[key]}`);
         return {
           x: date,
           y: +floatKey.toFixed(2),
@@ -35,7 +37,7 @@ const Visualizer = (props) => {
         };
       });
       
-      const performanceData = Object.keys(compare).map((key) => {
+      const performanceData = keys.map((key) => {
         const date = Date.parse(key)
         return {
           x: date,
