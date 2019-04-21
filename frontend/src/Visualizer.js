@@ -108,6 +108,14 @@ const Visualizer = (props) => {
           { name: 'performance' }, { name: comparison }
         ]}
       />
+      <VictoryScatter
+        containerComponent={
+        <VictoryCursorContainer
+          cursorDimension="x"
+          cursorLabel={(d) => `${round(d.x, 2)}, ${round(d.y, 2)}`}
+        />
+        }
+      />
     </V.VictoryChart>
   );
 };
