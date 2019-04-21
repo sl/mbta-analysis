@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { fetchJSON } from './utils/communication'
+import React, { useState, useEffect, Fragment } from 'react';
+import { fetchJSON } from './utils/communication';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Button from '@material-ui/core/Button'
 
-const App = () => {
+import 'typeface-roboto';
+
+
+const App = () => {  
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   
@@ -16,9 +21,11 @@ const App = () => {
   }, []);
   
   return(
-    <p>
-      Start Date: {startDate}, End Date: {endDate}
-    </p>
+    <Fragment>
+      <CssBaseline>
+        <Button variant="contained" color="primary">Example Material Button</Button>
+      </CssBaseline>
+    </Fragment>
   );
 }
 

@@ -1,8 +1,5 @@
 import { db } from '../utils/db';
-
-const toFormattedDateString = (date) => {
-  return date.toISOString().slice(0, 10);
-};
+import { toFormattedDateString } from '../utils/date';
 
 export const getDateRangeStart = async () => {
   const [rows, cols] =  await db().query(

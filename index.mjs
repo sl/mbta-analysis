@@ -4,12 +4,14 @@ import { connectToDatabase } from './backend/utils/db';
 
 // routes
 import mbtaRoutes from './backend/routes/mbta_routes';
+import climateRoutes from './backend/routes/climate_routes';
 
 // create the server
 const app = express();
 
 // add routers to the app
 app.use('/api/mbta', mbtaRoutes);
+app.use('/api/climate', climateRoutes);
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 // set up express so it serves the frontend if we're not in /api

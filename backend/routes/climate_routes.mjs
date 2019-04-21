@@ -2,13 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import { getPerformanceForDate } from '../../models/mbta_performance';
-import { getPerformanceForRange } from '../../models/mbta_performance';
-
-import { validate } from '../../utils/date';
+import { validate } from '../utils/date';
+import { getWeatherAttributeForDate } from '../models/climate';
+import { getWeatherAttributeForRange } from '../models/climate';
 
 // set up the router
-
 const router = express.Router();
 router.use(bodyParser.raw());
 router.use(bodyParser.json());
@@ -16,10 +14,10 @@ router.use(bodyParser.urlencoded({
   extended: true,
 }));
 
-// routes for /api/mbta/performance
+// routes for /api/climate
 
-// gets the performance rating for the givee date
-router.get('/:date', cors(), async (req, res) => {
+router.get('/:attribute/:date', cors(), async (req, res) => {
+  const attribute = req.params.attribute;
   const date = req.params.date;
   
   if (!validate(date)) {
@@ -28,12 +26,12 @@ router.get('/:date', cors(), async (req, res) => {
     return;
   }
   
-  const performance = await getPerformanceForDate(date);
-  res.json(performance);
+  const result = await getWeatherAttributeForDate(attribute, date);
+  res.json(result);
 });
 
-// gets the performance rating for the days within the given range
-router.get('/range/:start/:end', cors(), async (req, res) => {
+router.get('/:attribute/range/:start/:end', cors(), async (req, res) => {
+  const attribute = req.params.attribute;
   const start = req.params.start;
   const end = req.params.end;
   
@@ -52,8 +50,8 @@ router.get('/range/:start/:end', cors(), async (req, res) => {
   }
   
   try {
-    const performance = await getPerformanceForRange(start, end);
-    res.json(performance);
+    const results = await getWeatherAttributeForRange(attribute, start, end);
+    res.json(results);
   } catch (e) {
     res.status(400);
     res.send(`${e.name}: ${e.message}`);
