@@ -29,6 +29,12 @@ router.get('/end-date', cors(), async (req, res) => {
   res.json({ endDate });
 });
 
+router.get('/date-range', cors(), async (req, res) => {
+  const startDate = await getDateRangeStart();
+  const endDate = await getDateRangeEnd();
+  res.json({ startDate, endDate });
+});
+
 router.use('/performance', performanceRoute);
 
 export default router;

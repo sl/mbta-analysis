@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { fetchJSON } from './utils/communication';
+import React from 'react';
 import TitleBar from './TitleBar';
 
 import 'typeface-roboto';
-import Visualizer from './Visualizer';
+import ControlledVisualizer from './ControlledVisualizer';
+import { CssBaseline } from '@material-ui/core';
 
 const App = () => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
-  useEffect(() => {
-    const fetchDateRange = async () => {
-      const dateRange = await fetchJSON('mbta/date-range');
-      setStartDate(dateRange.startDate);
-      setEndDate(dateRange.endDate)
-    };
-
-    fetchDateRange();
-  }, []);
-
   return(
     <div>
-      <TitleBar />
-      <Visualizer />
+      <React.Fragment>
+        <CssBaseline />
+        <TitleBar />
+        <ControlledVisualizer />
+      </React.Fragment>
     </div>
   );
 }
