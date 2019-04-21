@@ -93,8 +93,6 @@ const ControlledVisualizer = (props) => {
             }}
           >
             <MenuItem value='wind-speed'>Wind Speed</MenuItem>
-            <MenuItem value='precipitation-length'>Precipitation Length</MenuItem>
-            <MenuItem value='precipitation-total'>Precipitation Total</MenuItem>
             <MenuItem value='precipitation-day'>Precipitation Day</MenuItem>
             <MenuItem value='sun-percent'>Sun Percent</MenuItem>
             <MenuItem value='snowfall-day'>Snowfall Day</MenuItem>
